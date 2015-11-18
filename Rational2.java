@@ -1,6 +1,6 @@
-//Arpita Abrol,  Niels Graham
+//Ling Cheng,  Niels Graham
 //APCS1 pd10
-//HW32 -- Irrationality Stops Here
+//HW#33 -- Do You Even Add, Bro?
 //2015-11-18
 
 public class Rational {
