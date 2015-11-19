@@ -26,9 +26,7 @@ public class Rational {
 	    denominator = b;
 	}
     }
-	    
-	    
-    
+	    	    
     //mutators
     public void setNum( int num ) {
 	numerator = num;
@@ -71,14 +69,40 @@ public class Rational {
 	this.denominator = num1Den * num2Num;
     }
 
-
+    //GCD
+    private static int GCD(int m, int n) {
+        if (m < 0) m = -m;
+        if (n < 0) n = -n;
+        if (0 == n) return m;
+        else return GCD(n, m % n);
+    }
+    
+    //LCM
+    public static int LCM(int m, int n) {
+        if (m < 0) m = -m;
+        if (n < 0) n = -n;
+        return m * (n / GCD(m, n));    
+    }
+    //add
+    public void add(Rational num){
+	int num1Num = this.numerator;
+	int num1Den = this.denominator;
+	int num2Num = num.numerator;
+	int num2Den = num.denominator;
+	int GCDNum = GCD(num1Num, num2Num);
+	int GCDDen = GCD(num1Den, num2Den);
+	this.numerator = GCDNum*(num1Num / GCDNum) * (num2Den / GCDDen) + (num2Num / GCDNum) * (num1Num / GCDDen);
+	this.denominator = LCM(num1Den, num2Den);
+    }
+	
+    
     //main method
     public static void main( String[]args ) {
-	Rational bob = new Rational();
-	Rational emma = new Rational();
+	//Rational bob = new Rational();
+	//Rational emma = new Rational();
 	Rational kevin = new Rational(4, 9);
 	Rational Jimbo = new Rational(2, 7);
-	emma.setNum(10);
+	/*emma.setNum(10);
 	bob.setNum(3);
 	bob.setDen(5);
 	System.out.println( emma + "\n" + bob);
@@ -87,6 +111,8 @@ public class Rational {
 	System.out.println(floatValue(emma));
 	System.out.println( kevin + "\n" + Jimbo);
 	kevin.divide(Jimbo);
+	System.out.println(kevin);
+	*/kevin.add(Jimbo);
 	System.out.println(kevin);
 	
     }
