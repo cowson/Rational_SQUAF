@@ -89,10 +89,25 @@ public class Rational {
 	int num1Den = this.denominator;
 	int num2Num = num.numerator;
 	int num2Den = num.denominator;
-	int GCDNum = GCD(num1Num, num2Num);
-	int GCDDen = GCD(num1Den, num2Den);
-	this.numerator = GCDNum*(num1Num / GCDNum) * (num2Den / GCDDen) + (num2Num / GCDNum) * (num1Num / GCDDen);
-	this.denominator = LCM(num1Den, num2Den);
+	this.numerator = num1Num * num2Den + num1Num * num1Den;
+	this.denominator = num1Den * num2Den;
+    }
+    //subtract
+    public void subtract(Rational num){
+	int num1Num = this.numerator;
+	int num1Den = this.denominator;
+	int num2Num = num.numerator;
+	int num2Den = num.denominator;
+	this.numerator = num1Num * num2Den - num1Num * num1Den;
+	this.denominator = num1Den * num2Den;
+    }
+    //Reduce
+    public void reduce(){
+	int a = this.numerator;
+	int b = this.denominator;
+	int g = GCD(a , b);
+	this.numerator = a/g;
+	this.denominator = b/g;
     }
 	
     
@@ -100,8 +115,8 @@ public class Rational {
     public static void main( String[]args ) {
 	//Rational bob = new Rational();
 	//Rational emma = new Rational();
-	Rational kevin = new Rational(4, 9);
-	Rational Jimbo = new Rational(2, 7);
+	Rational kevin = new Rational(1, 2);
+	Rational Jimbo = new Rational(1, 2);
 	/*emma.setNum(10);
 	bob.setNum(3);
 	bob.setDen(5);
@@ -112,7 +127,9 @@ public class Rational {
 	System.out.println( kevin + "\n" + Jimbo);
 	kevin.divide(Jimbo);
 	System.out.println(kevin);
-	*/kevin.add(Jimbo);
+	*/
+	kevin.subtract(Jimbo);
+	kevin.reduce();
 	System.out.println(kevin);
 	
     }
