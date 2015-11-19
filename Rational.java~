@@ -89,18 +89,42 @@ public class Rational {
 	int num1Den = this.denominator;
 	int num2Num = num.numerator;
 	int num2Den = num.denominator;
-	this.numerator = GCD(num1Num, num2Num)*(((num1Num / GCD(num1Num, num2Num)))*(num2Den / GCD(num1Den, num2Den)) + (num2Num / GCD(num1Num, num2Num)) * (num1Den / GCD(num1Den, num2Den)));
-	this.denominator = LCM(num1Den, num2Den);
+	this.numerator = num1Num * num2Den + num1Num * num1Den;
+	this.denominator = num1Den * num2Den;
     }
-	
-    
+    //subtract
+    public void subtract(Rational num){
+	int num1Num = this.numerator;
+	int num1Den = this.denominator;
+	int num2Num = num.numerator;
+	int num2Den = num.denominator;
+	this.numerator = num1Num * num2Den - num1Num * num1Den;
+	this.denominator = num1Den * num2Den;
+    }
+    //Reduce
+    public void reduce(){
+	int a = this.numerator;
+	int b = this.denominator;
+	int g = GCD(a , b);
+	this.numerator = a/g;
+	this.denominator = b/g;
+    }
+    //Compare to 
+    public static int compareTo(Rational num){
+	Rational num2 = this;
+        int fullNum = num.numerator * num.denominator;
+        int fullNum2 = num2.denominator * num2.numerator;
+        if (fullNum < fullNum2) return -1;
+        if (fullNum > fullNum2) return +1;
+        return 0;
+    }
     //main method
     public static void main( String[]args ) {
-	Rational bob = new Rational();
-	Rational emma = new Rational();
-	Rational kevin = new Rational(4, 9);
-	Rational Jimbo = new Rational(2, 7);
-	emma.setNum(10);
+	//Rational bob = new Rational();
+	//Rational emma = new Rational();
+	Rational kevin = new Rational(1, 2);
+	Rational Jimbo = new Rational(1, 2);
+	/*emma.setNum(10);
 	bob.setNum(3);
 	bob.setDen(5);
 	System.out.println( emma + "\n" + bob);
@@ -109,6 +133,10 @@ public class Rational {
 	System.out.println(floatValue(emma));
 	System.out.println( kevin + "\n" + Jimbo);
 	kevin.divide(Jimbo);
+	System.out.println(kevin);
+	*/
+	kevin.subtract(Jimbo);
+	kevin.reduce();
 	System.out.println(kevin);
 	
     }

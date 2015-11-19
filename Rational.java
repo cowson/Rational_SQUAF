@@ -12,22 +12,22 @@ public class Rational {
     
     //default constructor
     public Rational() {
+	//sets default number to 0/1
 	numerator = 0;
 	denominator = 1;
     }
 
     //overloaded constructor
     public Rational(int a, int b){
-	if (b == 0){
-	    numerator = 0;
-	    denominator = 1;
-	} else {
+	this(); //calls default constructor
+	if (b != 0){
+	    //if denominator is not 0, set instance vars to paramaters
 	    numerator = a;
 	    denominator = b;
 	}
     }
-	    	    
-    //mutators
+	    
+    //==================mutators======================
     public void setNum( int num ) {
 	numerator = num;
     }
@@ -35,55 +35,41 @@ public class Rational {
     public void setDen( int num ) {
 	denominator = num;
     }
-
+    //================================================
     
-    //Methods
+    //==================PHASE 1=======================================
 
     //string representation of num as fraction
     public String toString() {
+	//return "numerator/denominator"
 	return numerator + "/" + denominator;
     }
 
-    //return as a floating point 
-    public static float floatValue(Rational num){
+    //return the fraction as a floating point 
+    public float floatValue(Rational num){
+	//return the quotient of numerator and denominator as a float
 	return (float)num.numerator/num.denominator;
     }
     
     //multiply
     public void multiply( Rational num ) {
-	int num1Num = this.numerator;
-	int num1Den = this.denominator;
-	int num2Num = num.numerator;
-	int num2Den = num.denominator;
-	this.numerator = num1Num * num2Num;
-	this.denominator = num1Den * num2Den;
+	/*multiplies the numerator and denominators of this Rational object
+	  and Rational num*/
+        numerator *= num.numerator;
+        denominator *= num.denominator;
     }
 
     //divide
     public void divide( Rational num) {
-	int num1Num = this.numerator;
-	int num1Den = this.denominator;
-	int num2Num = num.numerator;
-	int num2Den = num.denominator;
-	this.numerator = num1Num * num2Den;
-	this.denominator = num1Den * num2Num;
+	/*multiplies the numerator and denominators of this Rational object
+	  to the reciprocal of Rational num*/
+        numerator *= num.denominator;
+        denominator *= num.denominator;
     }
+    //================================================================
 
-    //GCD
-    private static int GCD(int m, int n) {
-        if (m < 0) m = -m;
-        if (n < 0) n = -n;
-        if (0 == n) return m;
-        else return GCD(n, m % n);
-    }
-    
-    //LCM
-    public static int LCM(int m, int n) {
-        if (m < 0) m = -m;
-        if (n < 0) n = -n;
-        return m * (n / GCD(m, n));    
-    }
-    //add
+    //==================PHASE 2========================================
+    //adds num to the calling rational
     public void add(Rational num){
 	int num1Num = this.numerator;
 	int num1Den = this.denominator;
@@ -91,8 +77,9 @@ public class Rational {
 	int num2Den = num.denominator;
 	this.numerator = num1Num * num2Den + num1Num * num1Den;
 	this.denominator = num1Den * num2Den;
-    }
-    //subtract
+    }//end add
+    
+    //subtracts num from the calling rational
     public void subtract(Rational num){
 	int num1Num = this.numerator;
 	int num1Den = this.denominator;
@@ -100,24 +87,33 @@ public class Rational {
 	int num2Den = num.denominator;
 	this.numerator = num1Num * num2Den - num1Num * num1Den;
 	this.denominator = num1Den * num2Den;
-    }
-    //Reduce
+    }//end subtract
+
+    //returns the GCD of 2 integers
+    private static int gcd(int m, int n) {
+        if (m < 0) m = -m;
+        if (n < 0) n = -n;
+        if (0 == n) return m;
+        else return gcd(n, m % n);
+    }//end gcd
+    
+    //returns the GCD of numerator and denominator
+    public int gcd(){
+	return gcd(numerator, denominator);
+    }//end gcd
+    
+    //Reduces the numerator and the denominator so GCD is 1.
     public void reduce(){
 	int a = this.numerator;
 	int b = this.denominator;
-	int g = GCD(a , b);
+	int g = gcd(a , b);
+	//divide the numerator and the denominator by the g so the GCD is 1.
 	this.numerator = a/g;
 	this.denominator = b/g;
-    }
-    //Compare to 
-    public static int compareTo(Rational num){
-	Rational num2 = this;
-        int fullNum = num.numerator * num.denominator;
-        int fullNum2 = num2.denominator * num2.numerator;
-        if (fullNum < fullNum2) return -1;
-        if (fullNum > fullNum2) return +1;
-        return 0;
-    }
+    }//end reduce
+    //===================================================================
+
+
     //main method
     public static void main( String[]args ) {
 	//Rational bob = new Rational();
@@ -138,7 +134,6 @@ public class Rational {
 	kevin.subtract(Jimbo);
 	kevin.reduce();
 	System.out.println(kevin);
-	
-    }
+    }//end main
     
 }//end class
