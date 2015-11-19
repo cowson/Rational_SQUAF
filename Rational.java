@@ -109,8 +109,15 @@ public class Rational {
 	this.numerator = a/g;
 	this.denominator = b/g;
     }
-	
-    
+    //Compare to 
+    public static int compareTo(Rational num){
+	Rational num2 = this;
+        int fullNum = num.numerator * num.denominator;
+        int fullNum2 = num2.denominator * num2.numerator;
+        if (fullNum < fullNum2) return -1;
+        if (fullNum > fullNum2) return +1;
+        return 0;
+    }
     //main method
     public static void main( String[]args ) {
 	//Rational bob = new Rational();
