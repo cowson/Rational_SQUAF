@@ -88,14 +88,6 @@ public class Rational {
 	this.numerator = num1Num * num2Den - num1Num * num1Den;
 	this.denominator = num1Den * num2Den;
     }//end subtract
-
-    //returns the GCD of 2 integers
-    private static int gcd(int m, int n) {
-        if (m < 0) m = -m;
-        if (n < 0) n = -n;
-        if (0 == n) return m;
-        else return gcd(n, m % n);
-    }//end gcd
     
     //returns the GCD of numerator and denominator
     public int gcd(){
@@ -113,6 +105,31 @@ public class Rational {
     }//end reduce
     //===================================================================
 
+    //==================PHASE 3=========================================
+    //returns the GCD of 2 integers
+    private static int gcd(int m, int n) {
+        if (m < 0) m = -m;
+        if (n < 0) n = -n;
+        if (0 == n) return m;
+        else return gcd(n, m % n);
+    }//end gcd
+
+    //Compares the calling rational to the parameter
+    public int compareTo(Rational num2){
+	Rational num1 = this;
+	//converts the calling Rational and num2 to float values
+	float f1=floatValue(num1);
+	float f2=floatValue(num2);
+	
+	/*return 0 if the values are equal
+	  return 1 if the calling Rational is greater
+	  return -1 if the calling Rational is less
+	*/
+        if (f1== f2) return 0;
+	else if (f1 > f2) return 1;
+	else return -1;
+    }//end compareTo
+    //==================================================================
 
     //main method
     public static void main( String[]args ) {
