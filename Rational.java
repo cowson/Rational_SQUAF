@@ -1,7 +1,7 @@
-//Ling Cheng,  Niels Graham
+//Bayle Smith-Salzberg,  Niels Graham
 //APCS1 pd10
-//HW#33 -- Do You Even Add, Bro?
-//2015-11-18
+//HW#37 -- Rational equality
+//2015-11-25
 
 public class Rational {
     
@@ -94,13 +94,14 @@ public class Rational {
     }//end gcd
     
     //Reduces the numerator and the denominator so GCD is 1.
-    public void reduce(){
+    public Rational reduce(){
 	int a = this.numerator;
 	int b = this.denominator;
 	int g = gcd(a , b);
 	//divide the numerator and the denominator by the g so the GCD is 1.
 	this.numerator = a/g;
 	this.denominator = b/g;
+	return this;
     }//end reduce
     //===================================================================
 
@@ -132,21 +133,20 @@ public class Rational {
 
     //===================PHASE 4=========================================
     public boolean equals(Rational x ) {
+
 	
 	//First, check for aliasing.
-	boolean retVal = this.reduce() == x.reduce();
+		boolean retVal = this == x;
+		if (!retVal){
+		    retVal = x instanceof Rational;
+		    if (retVal) {
+			Rational y = x.reduce();
+			Rational z = this.reduce();
+			retVal = y.numerator == z.numerator && y.denominator == z.denominator;
+		    }
+		}
 	
-	//Next, if this and input Object are different objects,
-	
-	if ( !retVal ){
-	    //...check to see if input Object is a Rational
-	    retVal = x instanceof Rational 
-		
-		//...and that its state variables match those of this Tile
-		&& this.numerator.equals( ((Rational)x).numerator )
-		&& this.denominator.equals( ((Rational)x).denominator );
-	}
-	return retVal;
+		return retVal;
     }
 
 
@@ -160,7 +160,7 @@ public class Rational {
 	Rational emma = new Rational();
 	Rational kevin = new Rational(3, 9);
 	Rational Jimbo = new Rational(48, 12);
-	Rational Bayle = new Rational(3, 9);
+	Rational Bayle = new Rational(27, 81);
 	//emma.setNum(10);
 	//bob.setNum(3);
 	//bob.setDen(5);
@@ -170,6 +170,7 @@ public class Rational {
 	//System.out.println(floatValue(emma));
 	System.out.println( kevin + "\n" + Bayle);
         System.out.println(kevin.equals(Bayle));
+	System.out.println(kevin.equals(Jimbo));
     }//end main
     
 }//end class
