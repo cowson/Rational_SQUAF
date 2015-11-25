@@ -42,8 +42,7 @@ public class Rational {
     //string representation of num as fraction
     public String toString() {
 	//return "numerator/denominator"
-	return numerator + "/" + denominator;
-    }
+	return numerator + "/" + denominator;    }
 
     //return the fraction as a floating point 
     public float floatValue(Rational num){
@@ -131,26 +130,46 @@ public class Rational {
     }//end compareTo
     //==================================================================
 
+    //===================PHASE 4=========================================
+    public boolean equals(Rational x ) {
+	
+	//First, check for aliasing.
+	boolean retVal = this.reduce() == x.reduce();
+	
+	//Next, if this and input Object are different objects,
+	
+	if ( !retVal ){
+	    //...check to see if input Object is a Rational
+	    retVal = x instanceof Rational 
+		
+		//...and that its state variables match those of this Tile
+		&& this.numerator.equals( ((Rational)x).numerator )
+		&& this.denominator.equals( ((Rational)x).denominator );
+	}
+	return retVal;
+    }
+
+
+
+
+
+    //==================================================================
     //main method
     public static void main( String[]args ) {
-	//Rational bob = new Rational();
-	//Rational emma = new Rational();
-	Rational kevin = new Rational(1, 2);
-	Rational Jimbo = new Rational(1, 2);
-	/*emma.setNum(10);
-	bob.setNum(3);
-	bob.setDen(5);
-	System.out.println( emma + "\n" + bob);
-	emma.multiply( bob );
-	System.out.println( emma );
-	System.out.println(floatValue(emma));
-	System.out.println( kevin + "\n" + Jimbo);
-	kevin.divide(Jimbo);
-	System.out.println(kevin);
-	*/
-	kevin.subtract(Jimbo);
-	kevin.reduce();
-	System.out.println(kevin);
+	Rational bob = new Rational();
+	Rational emma = new Rational();
+	Rational kevin = new Rational(3, 9);
+	Rational Jimbo = new Rational(48, 12);
+	Rational Bayle = new Rational(3, 9);
+	//emma.setNum(10);
+	//bob.setNum(3);
+	//bob.setDen(5);
+	//System.out.println( emma + "\n" + bob);
+	//emma.multiply( bob );
+	//System.out.println( emma );
+	//System.out.println(floatValue(emma));
+	System.out.println( kevin + "\n" + Bayle);
+        System.out.println(kevin.equals(Bayle));
     }//end main
     
 }//end class
