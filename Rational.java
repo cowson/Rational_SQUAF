@@ -1,9 +1,11 @@
-//Bayle Smith-Salzberg,  Niels Graham
-//APCS1 pd10
-//HW#37 -- Rational equality
-//2015-11-25
+/*
+Team Squafartwo -- Richard Lin, Nielz Graham
+APCS pd10
+hw41 -- In America, the Driver Sits on the Left
+2015-12-3
+*/
 
-public class Rational {
+public class Rational implements Comparable {
     
     //instance vars
     private int numerator;
@@ -115,40 +117,55 @@ public class Rational {
     }//end gcd
 
     //Compares the calling rational to the parameter
-    public int compareTo(Rational num2){
-	Rational num1 = this;
-	//converts the calling Rational and num2 to float values
-	float f1=floatValue(num1);
-	float f2=floatValue(num2);
-	
-	/*return 0 if the values are equal
-	  return 1 if the calling Rational is greater
-	  return -1 if the calling Rational is less
-	*/
-        if (f1== f2) return 0;
-	else if (f1 > f2) return 1;
-	else return -1;
-    }//end compareTo
+    public int compareTo(Object factor) {
+	//I didn't reduce the Rationals because that would alter them without the user explicitly wanting to alter them
+
+	//This is a check to see if its Rational
+	if( !(factor instanceof Rational) ) {
+	    System.out.println("Error. Not a Rational. Printin -2");
+	    return -2;
+	}
+
+	//Typecasting factor into a rational
+	Rational temp = (Rational)factor;
+	int thisNumer = numerator * temp.denominator;
+	int thatNumer = temp.numerator * denominator;
+
+	//The following is just basic fraction comparison. Multiply by each other's denominators and then compare numerators.
+	if(thisNumer == thatNumer ) {
+	    return 0;
+	}
+	else if(thisNumer > thatNumer) {
+	    return 1;
+	}
+	else {
+	    return -1;
+	}
+    }
+   
+    //end compareTo
     //==================================================================
 
     //===================PHASE 4=========================================
-    public boolean equals(Rational x ) {
 
+    public boolean equals(Object rat) {
+	//First check aliasing:
+	boolean retVal = this == rat;
+
+	//Next, if this and input are different objects:
+	if (!retVal) {
+	    
+	    //check if input object is Rational:
+	     //Compares the calling rational to the parameter
+	    retVal = rat instanceof Rational
+
+		//And then use compareTo to check for instance variable equality
+		&& (this.compareTo((Rational)rat) == 0);
+	}
 	
-	//First, check for aliasing.
-		boolean retVal = this == x;
-		if (!retVal){
-		    retVal = x instanceof Rational;
-		    if (retVal) {
-			Rational y = x.reduce();
-			Rational z = this.reduce();
-			retVal = y.numerator == z.numerator && y.denominator == z.denominator;
-		    }
-		}
-	
-		return retVal;
+	return retVal;
+
     }
-
 
 
 
